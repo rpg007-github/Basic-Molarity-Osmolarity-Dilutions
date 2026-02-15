@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Molarity, Osmolarity &amp; Osmosis — Cross-Disciplinary Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#faf8f5;--bg-card:#ffffff;--text:#2c2c2c;--text-muted:#6b6b6b;
+  --accent:#6b3fa0;--accent-light:#f0e8f8;--accent-dark:#4a2870;
+  --accent-warm:#8b5e3c;--border:#e2ddd6;--border-light:#f0ece6;
+  --green:#2d8659;--green-light:#e8f5ee;--amber:#b8860b;--amber-light:#fef9e7;
+  --red:#c0392b;--red-light:#fdecea;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 4px 12px rgba(0,0,0,0.04);
+  --shadow-hover:0 2px 8px rgba(0,0,0,0.08),0 8px 24px rgba(0,0,0,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#2a1845 0%,#6b3fa0 45%,#8b5ec0 100%);color:#fff;padding:4rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero h1{font-family:'Crimson Pro',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;position:relative;letter-spacing:-0.02em;}
+.hero .subtitle{font-size:1.15rem;opacity:0.85;margin-top:0.5rem;position:relative;font-weight:300;}
+.hero .badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:0.3rem 1rem;font-family:'JetBrains Mono',monospace;font-size:0.8rem;margin-top:1rem;position:relative;letter-spacing:0.05em;}
+
+/* CONTAINER & CARDS */
+.container{max-width:900px;margin:0 auto;padding:2rem 1.5rem;}
+.section-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem 2.2rem;margin-bottom:1.8rem;box-shadow:var(--shadow);transition:box-shadow 0.3s;}
+.section-card:hover{box-shadow:var(--shadow-hover);}
+.section-card h2{font-family:'Crimson Pro',serif;font-size:1.6rem;color:var(--accent-dark);margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:0.85rem;background:var(--accent);color:#fff;padding:0.2rem 0.6rem;border-radius:6px;font-weight:500;}
+.section-card h3{font-family:'Crimson Pro',serif;font-size:1.25rem;color:var(--accent);margin:1.4rem 0 0.6rem;border-bottom:1px solid var(--border-light);padding-bottom:0.3rem;}
+.section-card p{margin-bottom:0.9rem;}
+
+/* CALLOUT BOXES */
+.formula-box{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin:1rem 0;font-size:0.95rem;}
+.formula-box code{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--accent-dark);font-weight:500;}
+.formula-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;font-weight:500;}
+.key-point{background:var(--green-light);border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin:1rem 0;}
+.key-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;font-weight:500;}
+.warning-box{background:var(--amber-light);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:1rem 1.2rem;margin:1rem 0;}
+.warning-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;font-weight:500;}
+.example-box{background:#f8f6ff;border:1px dashed var(--accent);border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;}
+.example-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;font-weight:500;}
+.bridge-box{background:linear-gradient(135deg,#f0e8f8 0%,#e8f5ee 100%);border:1px solid var(--accent);border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;}
+.bridge-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent-dark);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;font-weight:500;}
+
+/* TABLES */
+.fact-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.92rem;}
+.fact-table th{background:var(--accent);color:#fff;padding:0.6rem 0.8rem;text-align:left;font-weight:500;font-size:0.85rem;letter-spacing:0.03em;}
+.fact-table td{padding:0.55rem 0.8rem;border-bottom:1px solid var(--border-light);}
+.fact-table tr:nth-child(even) td{background:#faf8fd;}
+.fact-table tr:hover td{background:var(--accent-light);}
+
+/* TOC */
+.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;margin-bottom:2rem;box-shadow:var(--shadow);}
+.toc h3{font-family:'Crimson Pro',serif;color:var(--accent-dark);margin-bottom:0.8rem;font-size:1.2rem;}
+.toc a{display:inline-block;color:var(--accent);text-decoration:none;font-size:0.95rem;padding:0.2rem 0;transition:color 0.2s;}
+.toc a:hover{color:var(--accent-dark);text-decoration:underline;}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.2rem 2rem;}
+@media(max-width:600px){.toc-grid{grid-template-columns:1fr;}}
+
+/* NAV TABS */
+.nav-tabs{display:flex;justify-content:center;gap:0.5rem;padding:1.5rem 1rem 0;flex-wrap:wrap;}
+.nav-tab{font-family:'Source Sans 3',sans-serif;font-size:0.95rem;padding:0.6rem 1.4rem;border:1px solid var(--border);background:var(--bg-card);border-radius:8px 8px 0 0;cursor:pointer;transition:all 0.2s;color:var(--text-muted);font-weight:500;}
+.nav-tab:hover{color:var(--accent);border-color:var(--accent);}
+.nav-tab.active{color:var(--accent);border-color:var(--accent);border-bottom-color:var(--bg);background:var(--bg);font-weight:600;}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* QUIZ */
+.quiz-controls{display:flex;gap:1rem;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;}
+.quiz-controls select{font-family:'Source Sans 3',sans-serif;padding:0.5rem 1rem;border:1px solid var(--border);border-radius:8px;font-size:0.9rem;background:var(--bg-card);}
+.quiz-controls button{font-family:'Source Sans 3',sans-serif;padding:0.5rem 1.2rem;border:1px solid var(--accent);border-radius:8px;background:var(--accent-light);color:var(--accent-dark);cursor:pointer;font-weight:500;font-size:0.9rem;transition:all 0.2s;}
+.quiz-controls button:hover{background:var(--accent);color:#fff;}
+.q-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow);}
+.q-diff{font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:10px;font-weight:500;display:inline-block;margin-bottom:0.5rem;}
+.q-diff.easy{background:#e8f5ee;color:#2d8659;}
+.q-diff.medium{background:#fef9e7;color:#b8860b;}
+.q-diff.hard{background:#fdecea;color:#c0392b;}
+.q-text{font-size:1rem;font-weight:500;margin-bottom:1rem;}
+.q-opts label{display:block;padding:0.5rem 0.8rem;margin:0.3rem 0;border:1px solid var(--border-light);border-radius:8px;cursor:pointer;transition:all 0.2s;font-size:0.95rem;}
+.q-opts label:hover{background:var(--accent-light);border-color:var(--accent);}
+.q-opts input{margin-right:0.5rem;}
+.q-feedback{margin-top:0.8rem;padding:0.8rem 1rem;border-radius:8px;font-size:0.9rem;display:none;}
+.q-feedback.correct{background:var(--green-light);border:1px solid var(--green);color:#1a5632;}
+.q-feedback.wrong{background:var(--red-light);border:1px solid var(--red);color:#8b1a1a;}
+.q-submit{font-family:'Source Sans 3',sans-serif;padding:0.45rem 1.2rem;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;font-size:0.9rem;margin-top:0.5rem;transition:all 0.2s;}
+.q-submit:hover{background:var(--accent-dark);}
+.q-submit:disabled{opacity:0.5;cursor:default;}
+.score-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;box-shadow:var(--shadow);}
+.score-fill-wrap{flex:1;height:12px;background:var(--border-light);border-radius:6px;overflow:hidden;}
+.score-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:6px;transition:width 0.5s ease;width:0%;}
+.score-text{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--accent-dark);white-space:nowrap;min-width:80px;text-align:right;}
+
+/* FLASHCARDS */
+.fc-filters{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.fc-filter{font-family:'Source Sans 3',sans-serif;padding:0.4rem 1rem;border:1px solid var(--border);border-radius:20px;background:var(--bg-card);cursor:pointer;font-size:0.85rem;transition:all 0.2s;}
+.fc-filter:hover,.fc-filter.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.fc-counter{font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;}
+.fc-area{perspective:1000px;width:100%;max-width:600px;margin:0 auto 1.5rem;min-height:260px;}
+.fc-inner{position:relative;width:100%;min-height:260px;transition:transform 0.6s;transform-style:preserve-3d;cursor:pointer;}
+.fc-inner.flipped{transform:rotateY(180deg);}
+.fc-face{position:absolute;top:0;left:0;right:0;min-height:260px;backface-visibility:hidden;border-radius:12px;padding:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow);}
+.fc-front{background:var(--bg-card);}
+.fc-front .fc-cat{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.8rem;background:var(--accent-light);padding:0.2rem 0.6rem;border-radius:10px;}
+.fc-front .fc-q{font-family:'Crimson Pro',serif;font-size:1.3rem;color:var(--text);line-height:1.5;}
+.fc-back{background:linear-gradient(135deg,#f0e8f8,#faf8f5);transform:rotateY(180deg);}
+.fc-back .fc-a{font-size:1.05rem;color:var(--text);line-height:1.6;}
+.fc-hint{font-size:0.8rem;color:var(--text-muted);margin-top:0.8rem;font-style:italic;}
+.fc-nav{display:flex;justify-content:center;gap:1rem;align-items:center;}
+.fc-nav button{font-family:'Source Sans 3',sans-serif;padding:0.5rem 1.5rem;border:1px solid var(--accent);border-radius:8px;background:var(--accent-light);color:var(--accent-dark);cursor:pointer;font-weight:500;transition:all 0.2s;}
+.fc-nav button:hover{background:var(--accent);color:#fff;}
+
+/* SHORT ANSWER */
+.sa-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow);}
+.sa-q{font-size:1rem;font-weight:500;margin-bottom:0.8rem;}
+.sa-textarea{width:100%;min-height:100px;padding:0.8rem;border:1px solid var(--border);border-radius:8px;font-family:'Source Sans 3',sans-serif;font-size:0.95rem;resize:vertical;line-height:1.6;}
+.sa-textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(107,63,160,0.1);}
+.sa-submit{font-family:'Source Sans 3',sans-serif;padding:0.45rem 1.2rem;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;font-size:0.9rem;margin-top:0.5rem;transition:all 0.2s;}
+.sa-submit:hover{background:var(--accent-dark);}
+.sa-result{margin-top:1rem;display:none;}
+.sa-score-bar{height:10px;background:var(--border-light);border-radius:5px;overflow:hidden;margin:0.5rem 0;}
+.sa-score-fill{height:100%;border-radius:5px;transition:width 0.5s;}
+.sa-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.5rem 0;}
+.sa-tag{font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:0.15rem 0.5rem;border-radius:10px;}
+.sa-tag.hit{background:var(--green-light);color:var(--green);}
+.sa-tag.miss{background:#eee;color:#999;}
+.sa-model{margin-top:0.8rem;}
+.sa-model summary{cursor:pointer;color:var(--accent);font-weight:500;font-size:0.9rem;}
+.sa-model .model-text{margin-top:0.5rem;padding:0.8rem;background:var(--accent-light);border-radius:8px;font-size:0.9rem;line-height:1.6;}
+.sa-pct{font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:500;}
+
+@media(max-width:600px){
+  .section-card{padding:1.2rem 1rem;}
+  .container{padding:1.5rem 1rem;}
+  .hero{padding:3rem 1.5rem 2.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Molarity, Osmolarity &amp; Osmosis</h1>
+  <p class="subtitle">Cross-Disciplinary Foundations: Where Chemistry Meets Biology</p>
+  <div class="badge">FOCUSED TOPIC MODULE</div>
+</div>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" data-tab="study" onclick="switchTab('study')">Study Guide</button>
+  <button class="nav-tab" data-tab="quiz" onclick="switchTab('quiz')">Quiz</button>
+  <button class="nav-tab" data-tab="flashcards" onclick="switchTab('flashcards')">Flashcards</button>
+  <button class="nav-tab" data-tab="sa" onclick="switchTab('sa')">Short Answer</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     STUDY GUIDE TAB
+     ═══════════════════════════════════════════════════════════ -->
+<div class="tab-content active" id="tab-study">
+<div class="container">
+
+<div class="toc">
+  <h3>Table of Contents</h3>
+  <div class="toc-grid">
+    <a href="#s1">01 &mdash; The Mole: Chemistry's Counting Unit</a>
+    <a href="#s2">02 &mdash; Molarity</a>
+    <a href="#s3">03 &mdash; Dilutions</a>
+    <a href="#s4">04 &mdash; Dissociation &amp; Electrolytes</a>
+    <a href="#s5">05 &mdash; Osmolarity &amp; Tonicity</a>
+    <a href="#s6">06 &mdash; Osmosis</a>
+    <a href="#s7">07 &mdash; Cells in Solutions</a>
+    <a href="#s8">08 &mdash; Colligative Properties</a>
+    <a href="#s9">09 &mdash; Clinical &amp; Lab Connections</a>
+    <a href="#s10">10 &mdash; Master Formula Reference</a>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section-card" id="s1">
+  <h2><span class="sec-num">01</span>The Mole: Chemistry's Counting Unit</h2>
+  <p>Everything in this module depends on a single idea: chemists and biologists need a way to count particles (atoms, molecules, ions) that are far too small and numerous to count individually. The mole is that counting unit. One mole of anything contains 6.022 &times; 10<sup>23</sup> particles. That number is Avogadro's number.</p>
+
+  <div class="key-point">
+    <div class="key-label">Key Point</div>
+    The mole bridges the gap between the mass you can weigh on a balance and the number of particles actually present. This is the single most important conversion in all of chemistry and biology.
+  </div>
+
+  <p>The molecular weight (or molar mass) of a substance tells you how many grams one mole of that substance weighs. For example, the molecular weight of NaCl is about 58.44 g/mol, meaning one mole of NaCl weighs 58.44 grams and contains 6.022 &times; 10<sup>23</sup> formula units of NaCl.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Moles from Mass</div>
+    <code>moles = mass (g) / molecular weight (g/mol)</code>
+  </div>
+
+  <div class="example-box">
+    <div class="example-label">Worked Example</div>
+    <p>You weigh out 11.69 g of NaCl. How many moles is that?</p>
+    <p><code>11.69 g / 58.44 g/mol = 0.200 mol</code></p>
+    <p>This means you have 0.200 &times; 6.022 &times; 10<sup>23</sup> = 1.2 &times; 10<sup>23</sup> formula units of NaCl.</p>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-label">Common Mistake</div>
+    Students often confuse molecular weight with the mass of a sample. Molecular weight is a fixed property of a substance (grams per mole). The mass of your sample depends on how much you weighed out. They are related by the formula above, but they are not the same thing.
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section-card" id="s2">
+  <h2><span class="sec-num">02</span>Molarity</h2>
+  <p>Molarity is the most common way to express the concentration of a solution in both chemistry and biology. It tells you how many moles of solute are dissolved in one liter of solution. The unit is moles per liter, abbreviated M.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Molarity</div>
+    <code>M = moles of solute / liters of solution</code><br>
+    <span style="font-size:0.85rem;">Units: mol/L, which is the same as saying "molar" or "M"</span>
+  </div>
+
+  <p>A 1 M solution of glucose means there is 1 mole of glucose dissolved in enough water to make exactly 1 liter of total solution. Notice it says "liters of solution," not "liters of water." The solute takes up space too, so you dissolve the solute first, then add water to reach your final volume.</p>
+
+  <div class="example-box">
+    <div class="example-label">Worked Example</div>
+    <p>You need 500 mL of a 0.15 M NaCl solution. How many grams of NaCl do you weigh out?</p>
+    <p>Step 1: Find moles needed. <code>0.15 mol/L &times; 0.500 L = 0.075 mol</code></p>
+    <p>Step 2: Convert moles to grams. <code>0.075 mol &times; 58.44 g/mol = 4.38 g</code></p>
+    <p>Dissolve 4.38 g NaCl in water, then bring the total volume to 500 mL.</p>
+  </div>
+
+  <div class="key-point">
+    <div class="key-label">Key Point</div>
+    Molarity counts the number of moles of the substance you dissolved (the formula you weighed out), regardless of what happens to it after it dissolves. If you dissolve 1 mole of NaCl, the molarity of NaCl is 1 M, even though it breaks apart into Na<sup>+</sup> and Cl<sup>&minus;</sup> in water. This distinction becomes critical when we get to osmolarity.
+  </div>
+
+  <h3>Related Concentration Units</h3>
+  <table class="fact-table">
+    <tr><th>Unit</th><th>Definition</th><th>When You See It</th></tr>
+    <tr><td>Molarity (M)</td><td>mol solute / L solution</td><td>Gen chem, biology, biochemistry, clinical labs</td></tr>
+    <tr><td>Molality (m)</td><td>mol solute / kg solvent</td><td>Colligative property calculations</td></tr>
+    <tr><td>% (w/v)</td><td>grams solute / 100 mL solution</td><td>Biology labs, clinical settings</td></tr>
+    <tr><td>% (v/v)</td><td>mL solute / 100 mL solution</td><td>Ethanol solutions, lab reagents</td></tr>
+    <tr><td>mg/dL</td><td>milligrams per deciliter</td><td>Blood glucose, clinical lab values</td></tr>
+    <tr><td>mM, &mu;M, nM</td><td>millimolar, micromolar, nanomolar</td><td>Biochemistry, pharmacology, research</td></tr>
+    <tr><td>mEq/L</td><td>milliequivalents per liter</td><td>Electrolyte panels, nursing/clinical</td></tr>
+  </table>
+
+  <div class="bridge-box">
+    <div class="bridge-label">Cross-Disciplinary Bridge</div>
+    Molarity shows up in general chemistry (stoichiometry of reactions in solution), biology (cell culture media, osmotic calculations), biochemistry (enzyme kinetics, buffer preparation), and clinical medicine (IV fluid concentrations, drug dosing). The concept is identical everywhere. Only the context changes.
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section-card" id="s3">
+  <h2><span class="sec-num">03</span>Dilutions</h2>
+  <p>Dilution means adding more solvent to a solution to decrease its concentration. The essential idea is that the number of moles of solute does not change when you dilute. You are only adding water (or other solvent), not adding or removing solute.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Dilution Equation</div>
+    <code>M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub></code><br>
+    <span style="font-size:0.85rem;">M<sub>1</sub> = initial concentration, V<sub>1</sub> = volume you take from the stock, M<sub>2</sub> = final concentration, V<sub>2</sub> = final total volume</span>
+  </div>
+
+  <p>This works because M &times; V gives you moles: (mol/L) &times; L = mol. Since the moles stay the same before and after dilution, M<sub>1</sub>V<sub>1</sub> must equal M<sub>2</sub>V<sub>2</sub>.</p>
+
+  <div class="example-box">
+    <div class="example-label">Worked Example</div>
+    <p>You have a 5 M stock solution of glucose. You need 200 mL of a 0.25 M solution. How much stock do you use?</p>
+    <p><code>M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub></code></p>
+    <p><code>(5 M)(V<sub>1</sub>) = (0.25 M)(0.200 L)</code></p>
+    <p><code>V<sub>1</sub> = 0.050 L / 5 = 0.010 L = 10 mL</code></p>
+    <p>Take 10 mL of stock, add water to a total volume of 200 mL.</p>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-label">Common Mistake</div>
+    Students sometimes think V<sub>2</sub> is the amount of water you add. It is not. V<sub>2</sub> is the total final volume. If you need 200 mL total and you took 10 mL of stock, you add 190 mL of water, not 200 mL.
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section-card" id="s4">
+  <h2><span class="sec-num">04</span>Dissociation &amp; Electrolytes</h2>
+  <p>This section is where chemistry and biology start to overlap in a way that confuses students, because the two disciplines often teach the same concept under different names and in different chapters. The core idea: some substances break apart into ions when they dissolve in water, and some do not.</p>
+
+  <div class="key-point">
+    <div class="key-label">Key Point</div>
+    Molarity counts formula units. Osmolarity counts particles. The difference between them is dissociation.
+  </div>
+
+  <p>When NaCl dissolves in water, every formula unit separates into one Na<sup>+</sup> ion and one Cl<sup>&minus;</sup> ion. So 1 mole of NaCl produces 2 moles of particles in solution. Glucose (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>), on the other hand, does not dissociate. One mole of glucose produces 1 mole of particles.</p>
+
+  <table class="fact-table">
+    <tr><th>Substance</th><th>Dissociation</th><th>Particles per Formula Unit</th><th>Type</th></tr>
+    <tr><td>NaCl</td><td>Na<sup>+</sup> + Cl<sup>&minus;</sup></td><td>2</td><td>Strong electrolyte</td></tr>
+    <tr><td>CaCl<sub>2</sub></td><td>Ca<sup>2+</sup> + 2 Cl<sup>&minus;</sup></td><td>3</td><td>Strong electrolyte</td></tr>
+    <tr><td>Na<sub>2</sub>SO<sub>4</sub></td><td>2 Na<sup>+</sup> + SO<sub>4</sub><sup>2&minus;</sup></td><td>3</td><td>Strong electrolyte</td></tr>
+    <tr><td>Glucose</td><td>Does not dissociate</td><td>1</td><td>Nonelectrolyte</td></tr>
+    <tr><td>Urea</td><td>Does not dissociate</td><td>1</td><td>Nonelectrolyte</td></tr>
+    <tr><td>KCl</td><td>K<sup>+</sup> + Cl<sup>&minus;</sup></td><td>2</td><td>Strong electrolyte</td></tr>
+    <tr><td>AlCl<sub>3</sub></td><td>Al<sup>3+</sup> + 3 Cl<sup>&minus;</sup></td><td>4</td><td>Strong electrolyte</td></tr>
+  </table>
+
+  <p>The number of particles a substance produces when it dissolves is called the <strong>van 't Hoff factor (i)</strong>. For substances that dissociate completely, i equals the total number of ions produced. For nonelectrolytes, i = 1.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">van 't Hoff Factor</div>
+    <code>i = total moles of particles in solution / moles of solute dissolved</code><br>
+    <span style="font-size:0.85rem;">For ideal strong electrolytes: i = number of ions per formula unit</span>
+  </div>
+
+  <div class="bridge-box">
+    <div class="bridge-label">Cross-Disciplinary Bridge</div>
+    In general chemistry, you learn about strong and weak electrolytes when studying solution chemistry. In biology, the same concept reappears as "osmotically active particles" when you study cell membranes and osmosis. In physiology and nursing, it shows up again when you calculate IV fluid osmolarity. These are all the same idea: how many independent particles are floating around in solution.
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section-card" id="s5">
+  <h2><span class="sec-num">05</span>Osmolarity &amp; Tonicity</h2>
+  <p>Osmolarity is the total concentration of all dissolved particles in a solution, measured in osmoles per liter (Osm/L) or more commonly milliosmoles per liter (mOsm/L). This is the number that actually matters for osmosis, because water movement depends on the total number of dissolved particles, not on what kind of particles they are.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Osmolarity</div>
+    <code>Osmolarity = Molarity &times; i</code><br>
+    <span style="font-size:0.85rem;">where i = van 't Hoff factor (number of particles per formula unit)</span>
+  </div>
+
+  <div class="example-box">
+    <div class="example-label">Worked Example</div>
+    <p>What is the osmolarity of 0.9% NaCl (normal saline)?</p>
+    <p>Step 1: Convert % to molarity. 0.9% w/v = 0.9 g per 100 mL = 9 g/L. <code>9 g/L / 58.44 g/mol = 0.154 M</code></p>
+    <p>Step 2: NaCl dissociates into 2 particles (i = 2). <code>0.154 M &times; 2 = 0.308 Osm/L = 308 mOsm/L</code></p>
+    <p>This is very close to the osmolarity of human blood plasma (275&ndash;295 mOsm/L), which is why normal saline is used as an isotonic IV fluid.</p>
+  </div>
+
+  <h3>Osmolarity vs. Osmolality</h3>
+  <p>Osmolarity is osmoles per liter of solution. Osmolality is osmoles per kilogram of solvent. In dilute aqueous solutions (which covers nearly all biological and clinical situations), the two values are essentially the same because the density of dilute solutions is close to 1 g/mL. Clinical labs usually report osmolality (measured by freezing point depression), but the terms are often used interchangeably in practice.</p>
+
+  <h3>Tonicity vs. Osmolarity</h3>
+  <p>Tonicity describes the effect a solution has on cell volume. It depends only on the concentration of <strong>non-penetrating</strong> solutes, meaning solutes that cannot cross the cell membrane. Osmolarity counts all solutes, penetrating and non-penetrating.</p>
+
+  <div class="warning-box">
+    <div class="warning-label">Common Mistake</div>
+    A solution can be hyperosmolar but isotonic. For example, a solution of urea may have a high osmolarity, but because urea freely crosses cell membranes, it does not create an osmotic gradient, and cells placed in it will not shrink. Tonicity depends on whether the solute can cross the membrane, not just on how much of it there is.
+  </div>
+
+  <table class="fact-table">
+    <tr><th>Term</th><th>Compares To</th><th>Counts</th><th>Determines</th></tr>
+    <tr><td>Osmolarity</td><td>All particles in solution</td><td>All solutes (penetrating + non-penetrating)</td><td>Total particle concentration</td></tr>
+    <tr><td>Tonicity</td><td>Inside of cell</td><td>Only non-penetrating solutes</td><td>Direction of water movement &amp; cell volume</td></tr>
+  </table>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section-card" id="s6">
+  <h2><span class="sec-num">06</span>Osmosis</h2>
+  <p>Osmosis is the net movement of water across a selectively permeable membrane from a region of lower solute concentration (higher water concentration) to a region of higher solute concentration (lower water concentration). Water moves toward the solute. Think of it this way: water goes where the "stuff" is.</p>
+
+  <div class="key-point">
+    <div class="key-label">Key Point</div>
+    Water moves toward the side with more dissolved particles. This is the single sentence that explains osmosis. If you can identify which side has more particles, you know which direction water will flow.
+  </div>
+
+  <p>Osmosis is passive. It requires no energy input and occurs spontaneously whenever there is a concentration gradient across a semipermeable membrane. The membrane must be permeable to water but impermeable (or less permeable) to the solute for osmosis to occur.</p>
+
+  <h3>Osmotic Pressure</h3>
+  <p>Osmotic pressure (&pi;) is the pressure that would need to be applied to the high-solute side to prevent water from crossing. It is a measure of the "pulling power" of dissolved particles for water.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Osmotic Pressure (van 't Hoff Equation)</div>
+    <code>&pi; = iMRT</code><br>
+    <span style="font-size:0.85rem;">i = van 't Hoff factor, M = molarity, R = 0.0821 L&middot;atm/mol&middot;K, T = temperature in Kelvin</span>
+  </div>
+
+  <div class="example-box">
+    <div class="example-label">Worked Example</div>
+    <p>What is the osmotic pressure of a 0.30 M glucose solution at 37&deg;C (body temperature)?</p>
+    <p>Glucose does not dissociate, so i = 1. T = 37 + 273 = 310 K.</p>
+    <p><code>&pi; = (1)(0.30)(0.0821)(310) = 7.64 atm</code></p>
+    <p>That is a surprisingly large pressure, about 7.6 times atmospheric pressure, generated by a relatively dilute sugar solution. This illustrates how powerful osmotic forces can be in biological systems.</p>
+  </div>
+
+  <div class="bridge-box">
+    <div class="bridge-label">Cross-Disciplinary Bridge</div>
+    The van 't Hoff equation (&pi; = iMRT) has the same form as the ideal gas law (PV = nRT). This is not a coincidence. Dissolved particles exert osmotic pressure the way gas particles exert gas pressure, and the mathematical relationship is the same. If you know the ideal gas law from chemistry, you already know the framework for osmotic pressure.
+  </div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section-card" id="s7">
+  <h2><span class="sec-num">07</span>Cells in Solutions</h2>
+  <p>When you place a cell in a solution, water will move by osmosis depending on the relative concentration of non-penetrating solutes inside and outside the cell. The terminology is defined from the perspective of the solution the cell is placed in.</p>
+
+  <table class="fact-table">
+    <tr><th>Solution Type</th><th>Solute Concentration</th><th>Water Movement</th><th>Animal Cell</th><th>Plant Cell</th></tr>
+    <tr><td><strong>Hypotonic</strong></td><td>Lower outside than inside</td><td>Water enters cell</td><td>Swells, may lyse (burst)</td><td>Becomes turgid (firm), ideal state</td></tr>
+    <tr><td><strong>Isotonic</strong></td><td>Equal inside and outside</td><td>No net movement</td><td>Normal shape</td><td>Flaccid (limp)</td></tr>
+    <tr><td><strong>Hypertonic</strong></td><td>Higher outside than inside</td><td>Water leaves cell</td><td>Crenation (shrivels)</td><td>Plasmolysis (membrane pulls from wall)</td></tr>
+  </table>
+
+  <div class="key-point">
+    <div class="key-label">Key Point</div>
+    "Hypo" means below (less solute outside), "hyper" means above (more solute outside), "iso" means equal. The prefixes refer to the solute concentration of the external solution relative to the cell interior.
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-label">Common Mistake</div>
+    Students often mix up the direction: in a hypotonic solution, water goes IN (cell swells), not out. Remember: water follows the solute. In a hypotonic solution, there is more solute INSIDE the cell, so water flows inward. The prefix describes the solution, not the cell.
+  </div>
+
+  <div class="example-box">
+    <div class="example-label">Worked Example</div>
+    <p>A red blood cell (osmolarity about 300 mOsm/L) is placed in 0.45% NaCl. What happens?</p>
+    <p>0.45% NaCl = 4.5 g/L. Molarity = 4.5/58.44 = 0.077 M. Osmolarity = 0.077 &times; 2 = 154 mOsm/L.</p>
+    <p>154 mOsm/L is lower than the cell's 300 mOsm/L, so the solution is <strong>hypotonic</strong>. Water enters the cell. The red blood cell swells and may burst (hemolysis).</p>
+  </div>
+
+  <div class="bridge-box">
+    <div class="bridge-label">Cross-Disciplinary Bridge</div>
+    Plants actually need a slightly hypotonic environment. The influx of water creates turgor pressure that pushes the plasma membrane against the rigid cell wall, making the plant firm and upright. When plants wilt, it means they've lost turgor pressure because there isn't enough water entering the cells. This connects cell biology (membrane transport), botany (plant structure), and chemistry (concentration gradients) in a single phenomenon.
+  </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section-card" id="s8">
+  <h2><span class="sec-num">08</span>Colligative Properties</h2>
+  <p>Colligative properties are properties of a solution that depend on the number of dissolved particles, not on what those particles are. There are four colligative properties: boiling point elevation, freezing point depression, vapor pressure lowering, and osmotic pressure. These are taught in general chemistry, but they connect directly to the biology of osmosis because they all depend on particle count.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Boiling Point Elevation</div>
+    <code>&Delta;T<sub>b</sub> = i &times; K<sub>b</sub> &times; m</code><br>
+    <span style="font-size:0.85rem;">K<sub>b</sub> for water = 0.512 &deg;C/m, m = molality (mol solute/kg solvent)</span>
+  </div>
+  <div class="formula-box">
+    <div class="formula-label">Freezing Point Depression</div>
+    <code>&Delta;T<sub>f</sub> = i &times; K<sub>f</sub> &times; m</code><br>
+    <span style="font-size:0.85rem;">K<sub>f</sub> for water = 1.86 &deg;C/m</span>
+  </div>
+
+  <p>Notice that all colligative property formulas include i, the van 't Hoff factor. This is the same i that appears in osmolarity calculations and the osmotic pressure equation. The thread running through everything in this module is: particles matter, and how many of them you have determines what happens.</p>
+
+  <div class="bridge-box">
+    <div class="bridge-label">Cross-Disciplinary Bridge</div>
+    Clinical labs measure blood osmolality by freezing point depression. The more particles dissolved in blood, the lower the freezing point. This connects a general chemistry concept (colligative properties) directly to a clinical diagnostic technique used in hospitals every day. Salting roads in winter works by the same principle: dissolved salt lowers the freezing point of water.
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-label">Common Mistake</div>
+    Colligative property formulas use molality (m, moles per kg solvent), not molarity (M, moles per liter solution). In dilute aqueous solutions the numbers are nearly the same, but the distinction matters for precise calculations and exam questions.
+  </div>
+</div>
+
+<!-- SECTION 9 -->
+<div class="section-card" id="s9">
+  <h2><span class="sec-num">09</span>Clinical &amp; Lab Connections</h2>
+  <p>The concepts in this module are not abstract. They are used daily in clinical medicine, research labs, and anywhere solutions are prepared.</p>
+
+  <h3>Normal Saline (0.9% NaCl)</h3>
+  <p>This is the most commonly used IV fluid. Its osmolarity of approximately 308 mOsm/L is close enough to blood plasma (275&ndash;295 mOsm/L) that it functions as an isotonic solution. Red blood cells placed in normal saline neither swell nor shrink.</p>
+
+  <h3>D5W (5% Dextrose in Water)</h3>
+  <p>Initially isotonic in the bag (because glucose is present), but once infused, the glucose is rapidly metabolized, leaving behind free water. The effective result is a hypotonic infusion that distributes water into cells.</p>
+
+  <h3>Serial Dilutions</h3>
+  <p>In microbiology and immunology, serial dilutions are used to determine antibody titers, bacterial counts, and drug concentrations. Each step is a dilution (M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub>) applied repeatedly. A 1:10 serial dilution starting from 1 M goes to 0.1 M, then 0.01 M, then 0.001 M, and so on.</p>
+
+  <h3>Osmolar Gap</h3>
+  <p>In emergency medicine, the osmolar gap (measured osmolality minus calculated osmolality) helps detect poisoning by methanol, ethylene glycol, or other osmotically active substances. The chemistry concept of osmolarity is used as a diagnostic tool.</p>
+
+  <div class="key-point">
+    <div class="key-label">Key Point</div>
+    Normal human blood plasma osmolarity: 275&ndash;295 mOsm/L. Normal saline: about 308 mOsm/L. These two numbers are worth memorizing because they anchor everything about IV fluid therapy and osmotic calculations in a clinical context.
+  </div>
+</div>
+
+<!-- SECTION 10 -->
+<div class="section-card" id="s10">
+  <h2><span class="sec-num">10</span>Master Formula Reference</h2>
+  <table class="fact-table">
+    <tr><th>Formula</th><th>What It Calculates</th><th>Variables</th></tr>
+    <tr><td><code>moles = mass / MW</code></td><td>Moles from grams</td><td>mass in g, MW in g/mol</td></tr>
+    <tr><td><code>M = mol / L</code></td><td>Molarity</td><td>mol = moles solute, L = liters solution</td></tr>
+    <tr><td><code>M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub></code></td><td>Dilution</td><td>M = molarity, V = volume</td></tr>
+    <tr><td><code>Osm = M &times; i</code></td><td>Osmolarity</td><td>i = van 't Hoff factor</td></tr>
+    <tr><td><code>&pi; = iMRT</code></td><td>Osmotic pressure</td><td>R = 0.0821 L&middot;atm/mol&middot;K, T in Kelvin</td></tr>
+    <tr><td><code>&Delta;T<sub>b</sub> = iK<sub>b</sub>m</code></td><td>Boiling point elevation</td><td>K<sub>b</sub> water = 0.512 &deg;C/m</td></tr>
+    <tr><td><code>&Delta;T<sub>f</sub> = iK<sub>f</sub>m</code></td><td>Freezing point depression</td><td>K<sub>f</sub> water = 1.86 &deg;C/m</td></tr>
+  </table>
+
+  <table class="fact-table" style="margin-top:1.5rem;">
+    <tr><th>Constant / Value</th><th>Number</th></tr>
+    <tr><td>Avogadro's number</td><td>6.022 &times; 10<sup>23</sup></td></tr>
+    <tr><td>MW of NaCl</td><td>58.44 g/mol</td></tr>
+    <tr><td>MW of glucose</td><td>180.16 g/mol</td></tr>
+    <tr><td>MW of water</td><td>18.02 g/mol</td></tr>
+    <tr><td>R (gas constant)</td><td>0.0821 L&middot;atm/mol&middot;K</td></tr>
+    <tr><td>K<sub>b</sub> for water</td><td>0.512 &deg;C/m</td></tr>
+    <tr><td>K<sub>f</sub> for water</td><td>1.86 &deg;C/m</td></tr>
+    <tr><td>Blood plasma osmolarity</td><td>275&ndash;295 mOsm/L</td></tr>
+    <tr><td>Normal saline osmolarity</td><td>~308 mOsm/L</td></tr>
+    <tr><td>Body temperature in K</td><td>310 K (37&deg;C)</td></tr>
+  </table>
+</div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     QUIZ TAB
+     ═══════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-quiz">
+<div class="container">
+
+<div class="quiz-controls">
+  <select id="diff-filter" onchange="filterQuiz()">
+    <option value="all">All Difficulties</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+  <select id="cat-filter" onchange="filterQuiz()">
+    <option value="all">All Topics</option>
+  </select>
+  <button onclick="resetQuiz()">Reset Quiz</button>
+</div>
+
+<div class="score-bar">
+  <div class="score-fill-wrap"><div class="score-fill" id="score-fill"></div></div>
+  <div class="score-text" id="score-text">0 / 0</div>
+</div>
+
+<div id="quiz-area"></div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FLASHCARDS TAB
+     ═══════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-flashcards">
+<div class="container">
+
+<div class="fc-filters" id="fc-filters"></div>
+<div class="fc-counter" id="fc-counter"></div>
+<div class="fc-area" onclick="flipCard()">
+  <div class="fc-inner" id="fc-inner">
+    <div class="fc-face fc-front">
+      <div class="fc-cat" id="fc-cat"></div>
+      <div class="fc-q" id="fc-q"></div>
+      <div class="fc-hint">Click to flip</div>
+    </div>
+    <div class="fc-face fc-back">
+      <div class="fc-a" id="fc-a"></div>
+    </div>
+  </div>
+</div>
+<div class="fc-nav">
+  <button onclick="prevCard()">&larr; Previous</button>
+  <button onclick="nextCard()">Next &rarr;</button>
+</div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SHORT ANSWER TAB
+     ═══════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="tab-sa">
+<div class="container">
+<div id="sa-area"></div>
+</div>
+</div>
+
+<script>
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(id){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`[data-tab="${id}"]`).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+// ============================================================
+// QUIZ DATA
+// ============================================================
+const quizData=[
+// ---- EASY (30) ----
+{q:"What is molarity?",opts:["Grams of solute per liter","Moles of solute per liter of solution","Moles of solute per kilogram of solvent","Particles per milliliter"],ans:1,exp:"Molarity (M) = moles of solute divided by liters of solution.",diff:"easy",cat:"Molarity"},
+{q:"What units is molarity expressed in?",opts:["g/L","mol/kg","mol/L","mEq/L"],ans:2,exp:"Molarity is moles per liter (mol/L), also written as M.",diff:"easy",cat:"Molarity"},
+{q:"If you dissolve 1 mole of glucose in enough water to make 1 liter of solution, the molarity is:",opts:["0.5 M","1 M","2 M","It depends on the glucose mass"],ans:1,exp:"1 mole / 1 liter = 1 M. Molarity is simply moles divided by volume in liters.",diff:"easy",cat:"Molarity"},
+{q:"What is the molecular weight of NaCl?",opts:["40.00 g/mol","58.44 g/mol","74.55 g/mol","180.16 g/mol"],ans:1,exp:"Na (22.99) + Cl (35.45) = 58.44 g/mol.",diff:"easy",cat:"Mole Concept"},
+{q:"One mole of any substance contains how many particles?",opts:["6.022 × 10²³","3.011 × 10²³","6.022 × 10²⁰","1.0 × 10²⁴"],ans:0,exp:"Avogadro's number: 6.022 × 10²³ particles per mole.",diff:"easy",cat:"Mole Concept"},
+{q:"How do you calculate moles from mass?",opts:["mass × MW","mass / MW","MW / mass","mass × volume"],ans:1,exp:"moles = mass (g) / molecular weight (g/mol).",diff:"easy",cat:"Mole Concept"},
+{q:"Osmosis is the movement of:",opts:["Solute from high to low concentration","Water toward lower solute concentration","Water toward higher solute concentration","Ions through protein channels"],ans:2,exp:"In osmosis, water moves toward the side with more dissolved particles (higher solute concentration).",diff:"easy",cat:"Osmosis"},
+{q:"Osmosis requires what type of membrane?",opts:["Fully permeable","Impermeable","Selectively permeable","No membrane needed"],ans:2,exp:"Osmosis requires a selectively permeable membrane that lets water pass but restricts solute.",diff:"easy",cat:"Osmosis"},
+{q:"Is osmosis active or passive transport?",opts:["Active (requires ATP)","Passive (no energy needed)","Both","Neither"],ans:1,exp:"Osmosis is passive. Water moves spontaneously down its concentration gradient.",diff:"easy",cat:"Osmosis"},
+{q:"In a hypotonic solution, water moves:",opts:["Out of the cell","Into the cell","In both directions equally","It does not move"],ans:1,exp:"Hypotonic = less solute outside. Water moves inward toward the higher solute concentration inside the cell.",diff:"easy",cat:"Tonicity"},
+{q:"A cell in a hypertonic solution will:",opts:["Swell","Stay the same","Shrink","Divide"],ans:2,exp:"Hypertonic = more solute outside. Water leaves the cell, causing it to shrink (crenate).",diff:"easy",cat:"Tonicity"},
+{q:"In an isotonic solution, a cell will:",opts:["Swell","Shrink","Maintain its normal shape","Lyse"],ans:2,exp:"Isotonic = equal solute concentration inside and out. No net water movement.",diff:"easy",cat:"Tonicity"},
+{q:"The dilution equation is:",opts:["M = mol/L","M₁V₁ = M₂V₂","π = iMRT","ΔT = iKm"],ans:1,exp:"M₁V₁ = M₂V₂. Moles of solute before dilution = moles after dilution.",diff:"easy",cat:"Dilutions"},
+{q:"When you dilute a solution, what stays constant?",opts:["Volume","Molarity","Moles of solute","Temperature"],ans:2,exp:"Dilution adds solvent, changing volume and concentration, but the moles of solute remain the same.",diff:"easy",cat:"Dilutions"},
+{q:"What does the van 't Hoff factor (i) represent?",opts:["The volume of solution","The number of particles a solute produces in solution","The mass of the solute","The temperature of the solution"],ans:1,exp:"i = number of particles produced per formula unit when a substance dissolves.",diff:"easy",cat:"Dissociation"},
+{q:"NaCl dissociates into how many particles?",opts:["1","2","3","4"],ans:1,exp:"NaCl → Na⁺ + Cl⁻ = 2 particles. So i = 2.",diff:"easy",cat:"Dissociation"},
+{q:"Glucose dissolved in water has a van 't Hoff factor of:",opts:["0","1","2","6"],ans:1,exp:"Glucose is a nonelectrolyte and does not dissociate. i = 1.",diff:"easy",cat:"Dissociation"},
+{q:"A strong electrolyte in water:",opts:["Does not dissociate","Partially dissociates","Completely dissociates into ions","Forms a precipitate"],ans:2,exp:"Strong electrolytes dissociate completely into ions when dissolved.",diff:"easy",cat:"Dissociation"},
+{q:"What is the normal osmolarity of human blood plasma?",opts:["100-150 mOsm/L","200-250 mOsm/L","275-295 mOsm/L","400-500 mOsm/L"],ans:2,exp:"Normal blood plasma osmolarity is 275-295 mOsm/L.",diff:"easy",cat:"Osmolarity"},
+{q:"Osmolarity is calculated as:",opts:["Molarity × volume","Molarity × van 't Hoff factor","Mass / molecular weight","Pressure × temperature"],ans:1,exp:"Osmolarity = M × i, where i is the number of particles per formula unit.",diff:"easy",cat:"Osmolarity"},
+{q:"Which IV fluid is considered isotonic with blood?",opts:["Distilled water","0.45% NaCl","0.9% NaCl (normal saline)","3% NaCl"],ans:2,exp:"0.9% NaCl (normal saline) has an osmolarity of ~308 mOsm/L, close to blood plasma.",diff:"easy",cat:"Clinical"},
+{q:"'Hypo-' means:",opts:["Above","Below","Equal","Opposite"],ans:1,exp:"Hypo means below or under. A hypotonic solution has less solute than the cell interior.",diff:"easy",cat:"Tonicity"},
+{q:"When a red blood cell bursts due to excess water intake, this is called:",opts:["Crenation","Plasmolysis","Lysis (hemolysis)","Turgidity"],ans:2,exp:"Lysis (specifically hemolysis for RBCs) is the bursting of a cell from too much water entering.",diff:"easy",cat:"Tonicity"},
+{q:"Plant cells in a hypotonic solution become:",opts:["Crenated","Plasmolyzed","Turgid","Flaccid"],ans:2,exp:"Water enters the plant cell, creating turgor pressure against the cell wall. The cell becomes firm (turgid).",diff:"easy",cat:"Tonicity"},
+{q:"What is crenation?",opts:["A cell swelling and bursting","A cell shrinking and developing a scalloped edge","A plant cell pulling away from its wall","Normal cell shape"],ans:1,exp:"Crenation is the shriveling of animal cells in a hypertonic solution.",diff:"easy",cat:"Tonicity"},
+{q:"In the dilution equation M₁V₁ = M₂V₂, V₂ represents:",opts:["Volume of water added","Volume of stock used","Total final volume of solution","Volume of solute"],ans:2,exp:"V₂ is the total final volume, not the volume of water added.",diff:"easy",cat:"Dilutions"},
+{q:"Colligative properties depend on:",opts:["The identity of the solute","The number of dissolved particles","The color of the solution","The shape of the container"],ans:1,exp:"Colligative properties depend only on how many particles are in solution, not what they are.",diff:"easy",cat:"Colligative"},
+{q:"CaCl₂ dissociates into how many particles?",opts:["1","2","3","4"],ans:2,exp:"CaCl₂ → Ca²⁺ + 2 Cl⁻ = 3 particles total. i = 3.",diff:"easy",cat:"Dissociation"},
+{q:"Which dissolves without dissociating: NaCl, KCl, glucose, or HCl?",opts:["NaCl","KCl","Glucose","HCl"],ans:2,exp:"Glucose is a nonelectrolyte. It dissolves as intact molecules and does not produce ions.",diff:"easy",cat:"Dissociation"},
+{q:"Molality (m) differs from molarity (M) because molality uses:",opts:["Liters of solution","Kilograms of solvent","Grams of solute","Milliliters of solution"],ans:1,exp:"Molality = moles of solute per kilogram of solvent. Molarity uses liters of solution.",diff:"easy",cat:"Molarity"},
+
+// ---- MEDIUM (15) ----
+{q:"You need 250 mL of 0.50 M NaCl. How many grams do you weigh out?",opts:["7.31 g","14.61 g","29.22 g","58.44 g"],ans:0,exp:"Moles = 0.50 × 0.250 = 0.125 mol. Grams = 0.125 × 58.44 = 7.31 g.",diff:"medium",cat:"Molarity"},
+{q:"What is the osmolarity of a 0.15 M NaCl solution?",opts:["0.15 mOsm/L","150 mOsm/L","300 mOsm/L","0.30 mOsm/L"],ans:2,exp:"NaCl → 2 particles. Osmolarity = 0.15 M × 2 = 0.30 Osm/L = 300 mOsm/L.",diff:"medium",cat:"Osmolarity"},
+{q:"A 0.10 M CaCl₂ solution has an osmolarity of:",opts:["100 mOsm/L","200 mOsm/L","300 mOsm/L","400 mOsm/L"],ans:2,exp:"CaCl₂ → 3 particles. Osmolarity = 0.10 × 3 = 0.30 Osm/L = 300 mOsm/L.",diff:"medium",cat:"Osmolarity"},
+{q:"You have a 2 M stock solution. How much do you need to make 500 mL of a 0.1 M solution?",opts:["10 mL","25 mL","50 mL","100 mL"],ans:1,exp:"M₁V₁ = M₂V₂. (2)(V₁) = (0.1)(500). V₁ = 50/2 = 25 mL.",diff:"medium",cat:"Dilutions"},
+{q:"A solution of 0.3 M glucose and 0.15 M NaCl has a total osmolarity of:",opts:["300 mOsm/L","450 mOsm/L","600 mOsm/L","750 mOsm/L"],ans:2,exp:"Glucose: 0.3 × 1 = 0.3 Osm/L. NaCl: 0.15 × 2 = 0.3 Osm/L. Total = 0.6 Osm/L = 600 mOsm/L.",diff:"medium",cat:"Osmolarity"},
+{q:"Which solution is hypertonic to a cell with an internal osmolarity of 300 mOsm/L?",opts:["0.15 M NaCl","0.30 M glucose","0.20 M NaCl","0.10 M NaCl"],ans:2,exp:"0.20 M NaCl: 0.20 × 2 = 400 mOsm/L > 300. The other options are 300 or less.",diff:"medium",cat:"Tonicity"},
+{q:"Freezing point depression uses which concentration unit?",opts:["Molarity","Molality","Osmolarity","Percent w/v"],ans:1,exp:"ΔTf = iKfm. Colligative property calculations use molality (mol/kg solvent).",diff:"medium",cat:"Colligative"},
+{q:"A 0.50 m NaCl solution depresses the freezing point of water by approximately:",opts:["0.93 °C","1.86 °C","3.72 °C","0.51 °C"],ans:1,exp:"ΔTf = iKfm = 2 × 1.86 × 0.50 = 1.86 °C.",diff:"medium",cat:"Colligative"},
+{q:"The osmotic pressure equation π = iMRT most closely resembles which other equation?",opts:["E = mc²","q = mcΔT","PV = nRT","ΔG = ΔH - TΔS"],ans:2,exp:"π = iMRT has the same form as PV = nRT (the ideal gas law). Dissolved particles create osmotic pressure similarly to gas pressure.",diff:"medium",cat:"Osmosis"},
+{q:"A patient's measured blood osmolality is 320 mOsm/kg and the calculated value is 290 mOsm/kg. The osmolar gap is:",opts:["10","30","290","610"],ans:1,exp:"Osmolar gap = measured - calculated = 320 - 290 = 30 mOsm/kg. An elevated gap suggests unmeasured osmolytes.",diff:"medium",cat:"Clinical"},
+{q:"D5W (5% dextrose in water) is initially isotonic but becomes effectively hypotonic because:",opts:["The dextrose precipitates out","The glucose is metabolized, leaving free water","The bag is stored at low temperature","NaCl is absent"],ans:1,exp:"Once infused, cells metabolize the glucose rapidly. What remains is essentially water without solute, which is hypotonic.",diff:"medium",cat:"Clinical"},
+{q:"Plasmolysis occurs when a plant cell is placed in a:",opts:["Hypotonic solution","Isotonic solution","Hypertonic solution","Distilled water"],ans:2,exp:"In a hypertonic solution, water leaves the cell. The plasma membrane pulls away from the cell wall (plasmolysis).",diff:"medium",cat:"Tonicity"},
+{q:"If you dissolve 90 g of glucose (MW 180) in water to make 1 L, the molarity is:",opts:["0.25 M","0.50 M","1.0 M","90 M"],ans:1,exp:"Moles = 90/180 = 0.50 mol. Molarity = 0.50 mol / 1 L = 0.50 M.",diff:"medium",cat:"Molarity"},
+{q:"A 1:10 serial dilution performed 3 times on a 1 M solution gives a final concentration of:",opts:["0.1 M","0.01 M","0.001 M","0.0001 M"],ans:2,exp:"1 M → 0.1 M → 0.01 M → 0.001 M. Each step divides by 10.",diff:"medium",cat:"Dilutions"},
+{q:"Na₂SO₄ dissociates into how many particles, and what is the osmolarity of a 0.10 M solution?",opts:["2 particles, 200 mOsm/L","3 particles, 300 mOsm/L","4 particles, 400 mOsm/L","1 particle, 100 mOsm/L"],ans:1,exp:"Na₂SO₄ → 2 Na⁺ + SO₄²⁻ = 3 particles. Osmolarity = 0.10 × 3 = 0.30 Osm/L = 300 mOsm/L.",diff:"medium",cat:"Osmolarity"},
+
+// ---- HARD (8) ----
+{q:"A solution contains 0.10 M NaCl and 0.05 M CaCl₂. What is the total osmolarity?",opts:["250 mOsm/L","300 mOsm/L","350 mOsm/L","400 mOsm/L"],ans:2,exp:"NaCl: 0.10 × 2 = 0.20 Osm/L. CaCl₂: 0.05 × 3 = 0.15 Osm/L. Total = 0.35 Osm/L = 350 mOsm/L.",diff:"hard",cat:"Osmolarity"},
+{q:"A 0.20 M urea solution has a higher osmolarity than a cell's interior (300 mOsm/L is false; urea's actual osmolarity is 200 mOsm/L). If urea freely crosses the membrane, this solution is:",opts:["Hypertonic","Hypotonic","Hyperosmotic","Hypotonic and hypo-osmotic"],ans:3,exp:"Urea crosses freely, so it is a penetrating solute. It does not create a lasting osmotic gradient. The solution is hypo-osmotic (200 < 300) and also hypotonic because the effective non-penetrating osmolarity is 0.",diff:"hard",cat:"Tonicity"},
+{q:"Calculate the osmotic pressure of a 0.15 M NaCl solution at 37°C (310 K).",opts:["3.82 atm","7.63 atm","1.91 atm","15.26 atm"],ans:1,exp:"π = iMRT = 2 × 0.15 × 0.0821 × 310 = 7.63 atm.",diff:"hard",cat:"Osmosis"},
+{q:"Why does the actual van 't Hoff factor for 0.10 M NaCl measure slightly less than 2.00?",opts:["NaCl is a weak electrolyte","Ion pairing in solution reduces the effective particle count","Some NaCl evaporates","Temperature lowers the dissociation"],ans:1,exp:"At non-negligible concentrations, some Na⁺ and Cl⁻ ions form transient pairs, behaving as a single particle. The measured i is slightly less than the theoretical value.",diff:"hard",cat:"Dissociation"},
+{q:"A cell with an internal osmolarity of 300 mOsm/L is placed in a solution of 150 mOsm/L NaCl and 150 mOsm/L urea. Assuming urea freely crosses the membrane, the cell will:",opts:["Swell","Shrink","Stay the same","First swell, then return to normal"],ans:0,exp:"Total external osmolarity = 300, which seems isotonic. But urea is penetrating, so only NaCl counts for tonicity. The effective non-penetrating osmolarity is 150 mOsm/L, which is hypotonic. Water enters; the cell swells.",diff:"hard",cat:"Tonicity"},
+{q:"If blood plasma osmolality is 280 mOsm/kg and a patient ingests methanol (MW 32, does not dissociate), what plasma methanol concentration (in mg/dL) would raise the osmolar gap by 10?",opts:["16 mg/dL","32 mg/dL","100 mg/dL","320 mg/dL"],ans:1,exp:"An osmolar gap of 10 means 10 mOsm/kg extra = 0.010 mol/kg methanol. Mass = 0.010 × 32 = 0.32 g/kg ≈ 0.32 g/L = 32 mg/dL.",diff:"hard",cat:"Clinical"},
+{q:"You prepare 1 L of solution containing 5.85 g NaCl and 18.02 g glucose. What is the total osmolarity?",opts:["200 mOsm/L","300 mOsm/L","400 mOsm/L","500 mOsm/L"],ans:1,exp:"NaCl: 5.85/58.44 = 0.10 mol, × 2 = 0.20 Osm. Glucose: 18.02/180.16 = 0.10 mol, × 1 = 0.10 Osm. Total = 0.30 Osm/L = 300 mOsm/L.",diff:"hard",cat:"Osmolarity"},
+{q:"Two beakers separated by a semipermeable membrane: Side A has 0.5 M sucrose, Side B has 0.25 M NaCl. Which direction does water flow?",opts:["A to B","B to A","No net flow","Cannot determine"],ans:2,exp:"Side A: 0.5 M × 1 = 500 mOsm/L. Side B: 0.25 × 2 = 500 mOsm/L. Equal osmolarity = no net water flow.",diff:"hard",cat:"Osmosis"}
+];
+
+// ============================================================
+// FLASHCARD DATA
+// ============================================================
+const fcData=[
+{f:"Define molarity.",b:"Moles of solute per liter of solution (mol/L).",cat:"Molarity"},
+{f:"Formula: moles from mass?",b:"moles = mass (g) / molecular weight (g/mol)",cat:"Mole Concept"},
+{f:"Avogadro's number?",b:"6.022 × 10²³ particles per mole.",cat:"Mole Concept"},
+{f:"MW of NaCl?",b:"58.44 g/mol",cat:"Mole Concept"},
+{f:"MW of glucose?",b:"180.16 g/mol",cat:"Mole Concept"},
+{f:"MW of water?",b:"18.02 g/mol",cat:"Mole Concept"},
+{f:"Dilution equation?",b:"M₁V₁ = M₂V₂",cat:"Dilutions"},
+{f:"In M₁V₁ = M₂V₂, what does V₂ represent?",b:"The total final volume of the diluted solution, not the volume of water added.",cat:"Dilutions"},
+{f:"Why does M₁V₁ = M₂V₂ work?",b:"Because M × V = moles. Dilution changes V and M but not moles of solute.",cat:"Dilutions"},
+{f:"Define osmosis.",b:"Net movement of water across a selectively permeable membrane toward higher solute concentration.",cat:"Osmosis"},
+{f:"Is osmosis active or passive?",b:"Passive. No energy (ATP) required.",cat:"Osmosis"},
+{f:"What direction does water move in osmosis?",b:"Toward the side with more dissolved particles (higher solute concentration).",cat:"Osmosis"},
+{f:"Osmotic pressure equation?",b:"π = iMRT (i = van 't Hoff factor, M = molarity, R = 0.0821, T = Kelvin)",cat:"Osmosis"},
+{f:"Van 't Hoff factor (i) for NaCl?",b:"2 (Na⁺ + Cl⁻)",cat:"Dissociation"},
+{f:"Van 't Hoff factor for glucose?",b:"1 (does not dissociate)",cat:"Dissociation"},
+{f:"Van 't Hoff factor for CaCl₂?",b:"3 (Ca²⁺ + 2 Cl⁻)",cat:"Dissociation"},
+{f:"Van 't Hoff factor for Na₂SO₄?",b:"3 (2 Na⁺ + SO₄²⁻)",cat:"Dissociation"},
+{f:"Van 't Hoff factor for AlCl₃?",b:"4 (Al³⁺ + 3 Cl⁻)",cat:"Dissociation"},
+{f:"What is a strong electrolyte?",b:"A substance that dissociates completely into ions in water (e.g., NaCl, HCl, NaOH).",cat:"Dissociation"},
+{f:"What is a nonelectrolyte?",b:"A substance that dissolves without dissociating into ions (e.g., glucose, urea).",cat:"Dissociation"},
+{f:"Osmolarity formula?",b:"Osmolarity = Molarity × i (van 't Hoff factor)",cat:"Osmolarity"},
+{f:"Osmolarity of 0.15 M NaCl?",b:"0.15 × 2 = 0.30 Osm/L = 300 mOsm/L",cat:"Osmolarity"},
+{f:"Osmolarity of 0.10 M CaCl₂?",b:"0.10 × 3 = 0.30 Osm/L = 300 mOsm/L",cat:"Osmolarity"},
+{f:"Normal blood plasma osmolarity?",b:"275–295 mOsm/L",cat:"Clinical"},
+{f:"Osmolarity of normal saline (0.9% NaCl)?",b:"~308 mOsm/L",cat:"Clinical"},
+{f:"Hypotonic solution: definition?",b:"Solution with less solute (lower osmolarity) than the cell interior. Water enters the cell.",cat:"Tonicity"},
+{f:"Hypertonic solution: definition?",b:"Solution with more solute (higher osmolarity) than the cell interior. Water leaves the cell.",cat:"Tonicity"},
+{f:"Isotonic solution: definition?",b:"Solution with equal solute concentration as the cell interior. No net water movement.",cat:"Tonicity"},
+{f:"Animal cell in hypotonic solution?",b:"Swells, may lyse (burst). For RBCs: hemolysis.",cat:"Tonicity"},
+{f:"Animal cell in hypertonic solution?",b:"Shrinks (crenation).",cat:"Tonicity"},
+{f:"Plant cell in hypotonic solution?",b:"Becomes turgid (firm). Water pushes membrane against cell wall. This is the ideal state for plants.",cat:"Tonicity"},
+{f:"Plant cell in hypertonic solution?",b:"Undergoes plasmolysis: membrane pulls away from the cell wall.",cat:"Tonicity"},
+{f:"What is turgor pressure?",b:"The pressure of the cell contents pushing outward against the plant cell wall when water enters by osmosis.",cat:"Tonicity"},
+{f:"Difference between osmolarity and tonicity?",b:"Osmolarity counts ALL solute particles. Tonicity counts only NON-PENETRATING solutes (those that cannot cross the membrane).",cat:"Osmolarity"},
+{f:"What are colligative properties?",b:"Solution properties that depend on the NUMBER of dissolved particles, not their identity: boiling point elevation, freezing point depression, vapor pressure lowering, osmotic pressure.",cat:"Colligative"},
+{f:"Freezing point depression formula?",b:"ΔTf = i × Kf × m (Kf for water = 1.86 °C/m)",cat:"Colligative"},
+{f:"Boiling point elevation formula?",b:"ΔTb = i × Kb × m (Kb for water = 0.512 °C/m)",cat:"Colligative"},
+{f:"What concentration unit do colligative property formulas use?",b:"Molality (m): moles of solute per kilogram of solvent. Not molarity.",cat:"Colligative"},
+{f:"Molarity vs. molality?",b:"Molarity = mol/L solution. Molality = mol/kg solvent. Molality is temperature-independent.",cat:"Molarity"},
+{f:"Why is 0.9% NaCl called 'normal saline'?",b:"Because its osmolarity (~308 mOsm/L) is close to blood plasma, making it approximately isotonic.",cat:"Clinical"},
+{f:"What happens to D5W after IV infusion?",b:"Glucose is metabolized, leaving behind free water. Effectively becomes a hypotonic infusion.",cat:"Clinical"},
+{f:"What is a serial dilution?",b:"A stepwise series of dilutions where each step dilutes the previous solution by a fixed ratio (e.g., 1:10 each time).",cat:"Dilutions"},
+{f:"1:10 serial dilution, 3 steps, from 1 M?",b:"1 M → 0.1 M → 0.01 M → 0.001 M",cat:"Dilutions"},
+{f:"What is the osmolar gap?",b:"Measured osmolality minus calculated osmolality. Elevated gap suggests unmeasured osmolytes (methanol, ethylene glycol).",cat:"Clinical"},
+{f:"Why does π = iMRT resemble PV = nRT?",b:"Dissolved particles create osmotic pressure analogously to how gas particles create gas pressure. Same mathematical framework.",cat:"Osmosis"},
+{f:"% w/v means?",b:"Grams of solute per 100 mL of solution. Example: 0.9% NaCl = 0.9 g NaCl per 100 mL.",cat:"Molarity"},
+{f:"Convert 0.9% NaCl to molarity?",b:"0.9 g/100 mL = 9 g/L. 9/58.44 = 0.154 M.",cat:"Molarity"},
+{f:"mEq/L stands for?",b:"Milliequivalents per liter. Used for electrolyte panels in clinical settings. Accounts for ion charge.",cat:"Clinical"},
+{f:"What is hemolysis?",b:"The bursting of red blood cells, usually from placement in a hypotonic solution where excess water enters.",cat:"Tonicity"},
+{f:"Water activity in a cell is inversely related to:",b:"Solute concentration. More solute = less free water = lower water activity.",cat:"Osmosis"},
+{f:"R value used in π = iMRT?",b:"R = 0.0821 L·atm/mol·K",cat:"Osmosis"},
+{f:"Body temperature in Kelvin?",b:"310 K (37°C + 273 = 310 K)",cat:"Clinical"},
+{f:"Kf for water?",b:"1.86 °C/m (used in freezing point depression)",cat:"Colligative"},
+{f:"Kb for water?",b:"0.512 °C/m (used in boiling point elevation)",cat:"Colligative"}
+];
+
+// ============================================================
+// SHORT ANSWER DATA
+// ============================================================
+const saData=[
+{q:"Explain the difference between molarity and osmolarity. Why does the distinction matter in biology?",
+concepts:[
+{term:"Molarity",syns:["molarity","moles per liter","mol/L","concentration of solute"],weight:2},
+{term:"Osmolarity counts particles",syns:["osmolarity","total particles","particle count","dissolved particles","osmoles"],weight:3},
+{term:"Dissociation / van 't Hoff factor",syns:["dissociat","van 't hoff","i factor","breaks apart","ions","splits into"],weight:3},
+{term:"NaCl example (1 M NaCl = 2 Osm)",syns:["nacl","2 particles","two ions","sodium chloride","2 osm"],weight:2},
+{term:"Matters for osmosis / water movement",syns:["osmosis","water move","membrane","cell volume","tonicity","biological"],weight:2}
+],
+model:"Molarity measures the concentration of a solute in moles per liter of solution. It counts formula units, meaning it tracks how much of the original substance you dissolved. Osmolarity, on the other hand, measures the total concentration of all dissolved particles in solution. The distinction arises because some solutes dissociate: NaCl splits into Na⁺ and Cl⁻, so 1 M NaCl produces an osmolarity of 2 Osm/L. The van 't Hoff factor (i) captures this relationship (Osm = M × i). This matters in biology because osmosis depends on particle count, not formula units. A cell does not 'know' whether a particle is sodium or chloride; it responds to the total number of dissolved particles on each side of its membrane."
+},
+{q:"A red blood cell is placed in a 0.45% NaCl solution. Describe what happens to the cell and explain why, using the concepts of osmolarity and tonicity.",
+concepts:[
+{term:"Calculate osmolarity of 0.45% NaCl",syns:["0.45%","4.5 g","0.077 M","154 mOsm","about 150"],weight:2},
+{term:"Compare to cell interior (~300 mOsm/L)",syns:["300 mOsm","cell interior","intracellular","blood plasma","275","295"],weight:2},
+{term:"Solution is hypotonic",syns:["hypotonic","less solute outside","lower osmolarity"],weight:3},
+{term:"Water enters the cell",syns:["water enters","water moves in","water flows in","water goes into","influx"],weight:3},
+{term:"Cell swells / may lyse",syns:["swell","burst","lyse","hemolysis","rupture"],weight:2}
+],
+model:"0.45% NaCl means 4.5 g NaCl per liter. Converting to molarity: 4.5/58.44 = 0.077 M. Since NaCl dissociates into 2 particles, osmolarity = 0.077 × 2 = 154 mOsm/L. A red blood cell has an internal osmolarity of approximately 300 mOsm/L. Since 154 is well below 300, the solution is hypotonic. Water moves by osmosis from the lower solute concentration (outside) into the cell (higher solute concentration inside). The cell swells as water enters, and if the osmotic difference is large enough, the cell membrane can rupture, a process called hemolysis."
+},
+{q:"Explain why a solution can be hyperosmotic but not hypertonic. Give a specific example.",
+concepts:[
+{term:"Osmolarity counts all solutes",syns:["osmolarity","all solutes","total particles","all particles"],weight:2},
+{term:"Tonicity counts only non-penetrating solutes",syns:["tonicity","non-penetrating","cannot cross","impermeable","effective osmol"],weight:3},
+{term:"Penetrating solute crosses membrane",syns:["penetrat","cross","permeable","freely enters","pass through"],weight:3},
+{term:"Urea example",syns:["urea","ethanol","glycerol"],weight:2},
+{term:"No lasting osmotic gradient / cell doesn't shrink",syns:["no gradient","equilibrat","no net","doesn't shrink","no effect on volume","no change"],weight:2}
+],
+model:"Osmolarity counts every dissolved particle regardless of whether it can cross a cell membrane. Tonicity only considers non-penetrating solutes, those the membrane blocks. A classic example is urea: a urea solution might have an osmolarity higher than the cell interior (hyperosmotic), but because urea freely crosses the cell membrane, it quickly equilibrates across both sides. No lasting concentration gradient for non-penetrating solutes exists, so there is no sustained water movement. The cell does not shrink. The solution is hyperosmotic (high total particles) but effectively isotonic or even hypotonic in terms of its effect on cell volume."
+},
+{q:"Describe how the dilution equation M₁V₁ = M₂V₂ works. Why does it work? Explain using the concept of moles.",
+concepts:[
+{term:"M₁V₁ = M₂V₂",syns:["m1v1","m₁v₁","dilution equation","dilution formula"],weight:2},
+{term:"M × V = moles",syns:["molarity times volume","moles of solute","mol = M × V"],weight:3},
+{term:"Moles stay constant during dilution",syns:["moles stay","moles constant","moles same","moles don't change","moles unchanged","solute stays"],weight:3},
+{term:"Only adding solvent",syns:["adding water","adding solvent","more solvent","dilut"],weight:2},
+{term:"V₂ is total final volume",syns:["total volume","final volume","not water added"],weight:2}
+],
+model:"The dilution equation M₁V₁ = M₂V₂ works because when you dilute a solution, you only add solvent. You do not add or remove any solute. Since molarity × volume = moles (mol/L × L = mol), and the moles of solute are the same before and after dilution, the product M × V must be equal on both sides. M₁ and V₁ are the concentration and volume you start with (the stock). M₂ and V₂ are the concentration and total final volume you want to end up with. An important detail: V₂ is the total final volume of the diluted solution, not the amount of water you add."
+},
+{q:"How are colligative properties related to osmolarity? Explain with at least one specific colligative property.",
+concepts:[
+{term:"Colligative = depend on particle count",syns:["colligative","particle count","number of particles","how many particles"],weight:3},
+{term:"Van 't Hoff factor i appears in all formulas",syns:["van 't hoff","i factor","dissociation","i ="],weight:2},
+{term:"Specific example (freezing point, boiling point, or osmotic pressure)",syns:["freezing point","boiling point","osmotic pressure","vapor pressure"],weight:2},
+{term:"Osmolarity also depends on particle count",syns:["osmolarity","osm = M × i","total dissolved"],weight:2},
+{term:"Clinical or practical connection",syns:["blood","clinical","lab","measure","freezing point depression","salt on roads","IV","hospital"],weight:2}
+],
+model:"Colligative properties and osmolarity are connected because both depend on the same thing: the total number of dissolved particles in solution, not their identity. The van 't Hoff factor (i) appears in all colligative property formulas and in the osmolarity formula. For example, freezing point depression (ΔTf = iKfm) increases with more particles, just as osmolarity increases with more particles. Clinical laboratories actually exploit this connection: blood osmolality is routinely measured by freezing point depression. The more dissolved particles in the blood, the lower it freezes. This means a single chemistry concept (colligative properties) has a direct diagnostic application in medicine."
+},
+{q:"Explain why plant cells and animal cells respond differently to a hypotonic solution.",
+concepts:[
+{term:"Water enters both cell types",syns:["water enters","water moves in","osmosis","influx","water flows"],weight:2},
+{term:"Animal cell lacks a cell wall",syns:["no cell wall","animal cell","only membrane","no rigid wall"],weight:3},
+{term:"Animal cell swells and can lyse/burst",syns:["swell","lyse","burst","hemolysis","rupture"],weight:2},
+{term:"Plant cell has a rigid cell wall",syns:["cell wall","rigid wall","plant cell wall","cellulose"],weight:3},
+{term:"Turgor pressure / turgid",syns:["turgor","turgid","firm","pressure against wall","pushes against"],weight:2}
+],
+model:"In a hypotonic solution, water enters both plant and animal cells by osmosis because the solute concentration is lower outside than inside. The difference in response comes down to structure. Animal cells have only a plasma membrane and no rigid external support. As water enters, the cell swells, and if enough water enters, the membrane stretches beyond its limit and the cell bursts (lysis). Plant cells also swell as water enters, but they have a rigid cell wall outside the membrane. The wall resists expansion, and the internal pressure that builds up (turgor pressure) pushes back against further water entry. This makes the plant cell firm and turgid, which is actually the ideal state for plants. Turgor pressure is what keeps stems upright and leaves firm."
+},
+{q:"You are given a bottle of 10 M HCl and need to prepare 100 mL of 1 M HCl. Walk through every step, including what equipment you would use and any safety considerations.",
+concepts:[
+{term:"Use dilution equation",syns:["m1v1","m₁v₁","dilution","M₁V₁ = M₂V₂"],weight:2},
+{term:"Calculate volume of stock needed (10 mL)",syns:["10 mL","0.010 L","10 milliliter"],weight:2},
+{term:"Add acid to water (safety)",syns:["acid to water","never water to acid","add acid","exothermic","do as you oughta"],weight:3},
+{term:"Use volumetric flask or graduated cylinder",syns:["volumetric flask","graduated cylinder","measure","pipet"],weight:2},
+{term:"Bring to final volume of 100 mL",syns:["total volume","final volume","100 mL","bring to volume","top off"],weight:2}
+],
+model:"Using M₁V₁ = M₂V₂: (10 M)(V₁) = (1 M)(100 mL), so V₁ = 10 mL. You need 10 mL of the concentrated HCl stock. The procedure: first, add approximately 50-70 mL of distilled water to a 100 mL volumetric flask. Then carefully measure 10 mL of concentrated HCl using a graduated pipette and add it slowly to the water already in the flask. Always add acid to water, never the reverse, because the dilution of concentrated acid is highly exothermic and adding water to acid can cause violent splattering. After mixing, bring the total volume to exactly 100 mL by adding water to the mark on the flask. Wear gloves, goggles, and work in a fume hood when handling concentrated HCl."
+},
+{q:"A patient's lab report shows a blood osmolality of 310 mOsm/kg. Is this normal? What might cause an elevated value, and what role does the osmolar gap play in diagnosis?",
+concepts:[
+{term:"Normal is 275-295 mOsm/kg",syns:["275","295","normal range","normal osmolality"],weight:2},
+{term:"310 is elevated / abnormal",syns:["elevated","high","above normal","abnormal","310"],weight:2},
+{term:"Possible causes",syns:["dehydrat","diabetes","hyperglycemia","sodium","electrolyte","kidney","renal"],weight:2},
+{term:"Osmolar gap = measured minus calculated",syns:["osmolar gap","measured minus calculated","difference"],weight:3},
+{term:"Elevated gap suggests unmeasured osmolytes (toxic alcohols)",syns:["methanol","ethylene glycol","toxic","unmeasured","poison","alcohol","ingestion"],weight:3}
+],
+model:"Normal blood osmolality is 275-295 mOsm/kg, so 310 is elevated. Common causes include dehydration (concentrating the existing solutes), hyperglycemia (excess glucose adding particles), hypernatremia (elevated sodium), or kidney dysfunction. The osmolar gap helps determine if unmeasured substances are responsible. It is calculated as measured osmolality minus calculated osmolality (where calculated osmolality is estimated from sodium, glucose, and BUN concentrations). If the gap is elevated (typically more than 10), it suggests osmotically active substances are present that standard tests don't measure, most notably toxic alcohols like methanol or ethylene glycol. This makes the osmolar gap a critical diagnostic tool in the emergency department for suspected poisoning cases."
+}
+];
+
+// ============================================================
+// QUIZ ENGINE
+// ============================================================
+let answered=0,correct=0;
+const catSet=new Set();
+quizData.forEach(q=>catSet.add(q.cat));
+const catSel=document.getElementById('cat-filter');
+[...catSet].sort().forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSel.appendChild(o);});
+
+function renderQuiz(){
+  const df=document.getElementById('diff-filter').value;
+  const cf=document.getElementById('cat-filter').value;
+  const area=document.getElementById('quiz-area');
+  area.innerHTML='';answered=0;correct=0;updateScore();
+  const filtered=quizData.filter(q=>(df==='all'||q.diff===df)&&(cf==='all'||q.cat===cf));
+  filtered.forEach((q,idx)=>{
+    const div=document.createElement('div');div.className='q-card';div.id='q-'+idx;
+    let optsHtml='';
+    q.opts.forEach((o,oi)=>{optsHtml+=`<label><input type="radio" name="q${idx}" value="${oi}"> ${o}</label>`;});
+    div.innerHTML=`<div class="q-diff ${q.diff}">${q.diff.toUpperCase()}</div><div class="q-text">${idx+1}. ${q.q}</div><div class="q-opts">${optsHtml}</div><button class="q-submit" onclick="checkQ(${idx},${q.ans},'${q.diff}')">Check Answer</button><div class="q-feedback" id="fb-${idx}"></div>`;
+    area.appendChild(div);
+  });
+}
+function checkQ(idx,ans,diff){
+  const sel=document.querySelector(`input[name="q${idx}"]:checked`);
+  if(!sel)return;
+  const fb=document.getElementById('fb-'+idx);
+  const val=parseInt(sel.value);
+  const qObj=quizData.filter(q=>{
+    const df=document.getElementById('diff-filter').value;
+    const cf=document.getElementById('cat-filter').value;
+    return (df==='all'||q.diff===df)&&(cf==='all'||q.cat===cf);
+  })[idx];
+  answered++;
+  if(val===ans){correct++;fb.className='q-feedback correct';fb.innerHTML='<strong>Correct!</strong> '+qObj.exp;}
+  else{fb.className='q-feedback wrong';fb.innerHTML='<strong>Incorrect.</strong> '+qObj.exp;}
+  fb.style.display='block';
+  document.querySelector(`#q-${idx} .q-submit`).disabled=true;
+  updateScore();
+}
+function updateScore(){
+  document.getElementById('score-text').textContent=`${correct} / ${answered}`;
+  const pct=answered?Math.round((correct/answered)*100):0;
+  document.getElementById('score-fill').style.width=pct+'%';
+}
+function filterQuiz(){renderQuiz();}
+function resetQuiz(){renderQuiz();}
+
+// ============================================================
+// FLASHCARD ENGINE
+// ============================================================
+let fcFiltered=[...fcData],fcIdx=0;
+const fcCats=[...new Set(fcData.map(c=>c.cat))].sort();
+const fcFiltersDiv=document.getElementById('fc-filters');
+const allBtn=document.createElement('button');allBtn.className='fc-filter active';allBtn.textContent='All';allBtn.onclick=()=>filterFC('all');fcFiltersDiv.appendChild(allBtn);
+fcCats.forEach(c=>{const b=document.createElement('button');b.className='fc-filter';b.textContent=c;b.onclick=()=>filterFC(c);fcFiltersDiv.appendChild(b);});
+
+function filterFC(cat){
+  document.querySelectorAll('.fc-filter').forEach(b=>b.classList.remove('active'));
+  if(cat==='all'){fcFiltered=[...fcData];document.querySelector('.fc-filter').classList.add('active');}
+  else{fcFiltered=fcData.filter(c=>c.cat===cat);[...document.querySelectorAll('.fc-filter')].find(b=>b.textContent===cat).classList.add('active');}
+  fcIdx=0;showCard();
+}
+function showCard(){
+  if(!fcFiltered.length)return;
+  const c=fcFiltered[fcIdx];
+  document.getElementById('fc-cat').textContent=c.cat;
+  document.getElementById('fc-q').innerHTML=c.f;
+  document.getElementById('fc-a').innerHTML=c.b;
+  document.getElementById('fc-inner').classList.remove('flipped');
+  document.getElementById('fc-counter').textContent=`Card ${fcIdx+1} of ${fcFiltered.length}`;
+}
+function flipCard(){document.getElementById('fc-inner').classList.toggle('flipped');}
+function nextCard(){fcIdx=(fcIdx+1)%fcFiltered.length;showCard();}
+function prevCard(){fcIdx=(fcIdx-1+fcFiltered.length)%fcFiltered.length;showCard();}
+
+// ============================================================
+// SHORT ANSWER ENGINE
+// ============================================================
+function renderSA(){
+  const area=document.getElementById('sa-area');area.innerHTML='';
+  saData.forEach((sa,idx)=>{
+    const div=document.createElement('div');div.className='sa-card';
+    div.innerHTML=`<div class="sa-q">${idx+1}. ${sa.q}</div><textarea class="sa-textarea" id="sa-input-${idx}" placeholder="Type your answer here..."></textarea><button class="sa-submit" onclick="gradeSA(${idx})">Grade Answer</button><div class="sa-result" id="sa-result-${idx}"></div>`;
+    area.appendChild(div);
+  });
+}
+function gradeSA(idx){
+  const input=document.getElementById('sa-input-'+idx).value.toLowerCase();
+  const sa=saData[idx];
+  if(!input.trim())return;
+  let totalWeight=0,earnedWeight=0;
+  const tags=[];
+  sa.concepts.forEach(c=>{
+    totalWeight+=c.weight;
+    const hit=c.syns.some(s=>input.includes(s.toLowerCase()));
+    if(hit){earnedWeight+=c.weight;tags.push(`<span class="sa-tag hit">${c.term}</span>`);}
+    else{tags.push(`<span class="sa-tag miss">${c.term}</span>`);}
+  });
+  const words=input.split(/\s+/).length;
+  const bonus=Math.min(words/50*0.05,0.1);
+  let pct=Math.min(Math.round(((earnedWeight/totalWeight)+bonus)*100),100);
+  const color=pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+  const res=document.getElementById('sa-result-'+idx);
+  res.innerHTML=`<div class="sa-pct" style="color:${color}">${pct}%</div><div class="sa-score-bar"><div class="sa-score-fill" style="width:${pct}%;background:${color};"></div></div><div class="sa-tags">${tags.join('')}</div><details class="sa-model"><summary>Show Model Answer</summary><div class="model-text">${sa.model}</div></details>`;
+  res.style.display='block';
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderQuiz();
+showCard();
+renderSA();
+</script>
+</body>
+</html>
